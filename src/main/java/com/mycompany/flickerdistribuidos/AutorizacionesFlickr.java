@@ -109,4 +109,7 @@ public class AutorizacionesFlickr {
         return auth;
     }
 
+    
+    // dir.list() -> recuperaremos todos los ficheros que componen una carpeta en un arraylist o lo que queramos
+    // Los contamos y los subiriamos de manera asincrona.
 }
