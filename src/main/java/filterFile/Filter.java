@@ -15,6 +15,26 @@ import java.util.regex.*;
  */
 public class Filter implements FilenameFilter {
 
+  // array of supported extensions (use a List if you prefer)
+    static final String[] EXTENSIONS = new String[]{
+        "gif", "png", "bmp", "jpeg", "jpg" // and other formats you need
+    };
+    // filter to identify images based on their extensions
+    public static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
+
+        @Override
+        public boolean accept(final File dir, final String name) {
+            for (final String ext : EXTENSIONS) {
+                if (name.endsWith("." + ext)) {
+                    return (true);
+                }
+            }
+            return (false);
+        }
+    };
+    
+    
+    
   @Override
   public boolean accept (File dir, String name) {
     return Pattern.matches(".*\\.(jpg|jpeg|gif|png|bmp)", name);

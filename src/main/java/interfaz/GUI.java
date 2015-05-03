@@ -5,6 +5,15 @@
  */
 package interfaz;
 
+import filterFile.Filter;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.io.File;
+import java.util.Scanner;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import jdk.nashorn.internal.runtime.Context;
+
 import com.flickr4java.flickr.Flickr;
 import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.REST;
@@ -21,6 +30,7 @@ import com.flickr4java.flickr.prefs.PrefsInterface;
 import com.flickr4java.flickr.uploader.UploadMetaData;
 import com.flickr4java.flickr.uploader.Uploader;
 import com.mycompany.flickerdistribuidos.FlickrHelper.Imagenes;
+import com.mycompany.flickerdistribuidos.Main;
 import com.urjc.java.pruautorizacionesflickr.AutorizacionesFlickr;
 import java.io.File;
 import java.io.FilenameFilter;
@@ -35,21 +45,19 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import filterFile.Filter;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.io.File;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import jdk.nashorn.internal.runtime.Context;
-
 /**
  *
  * @author Alberto
  */
 public class GUI extends javax.swing.JFrame {
 
-    private String [] imagenesASubir;
+    private String [] ficheros;
+    private File directorio;
+    static Flickr flickr;
+
+    static Set<String> pids = new HashSet<>();
+    final static AutorizacionesFlickr autorizacionesFlickr
+            = new AutorizacionesFlickr();
     
     public class Imagen extends javax.swing.JPanel {
  
@@ -66,11 +74,10 @@ public class GUI extends javax.swing.JFrame {
         public void paint(Graphics grafico) {
             Dimension height = getSize();
  
-            //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa            
-            ImageIcon Img = new ImageIcon(getClass().getClassLoader().getResource(this.img)); 
- 
+            //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa
+            ImageIcon Img = new ImageIcon(getClass().getClassLoader().getResource(this.img));
+            
             //se dibuja la imagen que tenemos en el paquete Images //dentro de un panel
- 
             grafico.drawImage(Img.getImage(), 0, 0, height.width, height.height, null);
  
             setOpaque(false);
@@ -90,14 +97,8 @@ public class GUI extends javax.swing.JFrame {
                         new REST());
         RequestContext rContext = RequestContext.getRequestContext();
         rContext.setAuth(autorizacionesFlickr.getAuth());
-        
-        Imagenes subir = new Imagenes(flickr);
-        
+                       
         Scanner scanner = new Scanner(System.in);
-        String sPath = null;
-        Path path;
-        File dir;
-        
         
         //Pantalla Inicio
         pantallaInicio.setVisible(true);
@@ -135,11 +136,14 @@ public class GUI extends javax.swing.JFrame {
         botonSubir = new javax.swing.JButton();
         cancelarListar = new javax.swing.JButton();
         listadoArchivos = new java.awt.TextArea();
+        cuadroTextoEtiquetas = new javax.swing.JTextField();
+        labelEtiquetas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(java.awt.Color.white);
         setMaximumSize(new java.awt.Dimension(600, 600));
+        setMinimumSize(new java.awt.Dimension(600, 600));
         setPreferredSize(new java.awt.Dimension(600, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(600, 600));
@@ -227,27 +231,41 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        cuadroTextoEtiquetas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cuadroTextoEtiquetasActionPerformed(evt);
+            }
+        });
+
+        labelEtiquetas.setText("Etiquetas:");
+
         javax.swing.GroupLayout pantallaListarLayout = new javax.swing.GroupLayout(pantallaListar);
         pantallaListar.setLayout(pantallaListarLayout);
         pantallaListarLayout.setHorizontalGroup(
             pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pantallaListarLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
                         .addComponent(cancelarListar)
                         .addGap(18, 18, 18)
-                        .addComponent(botonSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80))
+                        .addComponent(botonSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(listadoArchivos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
-                        .addComponent(listadoArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80))))
+                        .addComponent(labelEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cuadroTextoEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(49, 49, 49))
         );
         pantallaListarLayout.setVerticalGroup(
             pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
                 .addGap(120, 120, 120)
-                .addComponent(listadoArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(listadoArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cuadroTextoEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelEtiquetas))
                 .addGap(40, 40, 40)
                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,8 +325,6 @@ public class GUI extends javax.swing.JFrame {
 
     private void selectorDirectorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectorDirectorioActionPerformed
         // TODO add your handling code here:
-        File directorio;
-        String [] ficheros;
         String seleccion = evt.getActionCommand();
         
         if (seleccion.equals(JFileChooser.APPROVE_SELECTION)) {
@@ -365,6 +381,28 @@ public class GUI extends javax.swing.JFrame {
 
     private void botonSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSubirActionPerformed
         // TODO add your handling code here:
+        Imagenes subir = new Imagenes(flickr);
+        String photoID;        
+                      
+            String tags = (cuadroTextoEtiquetas.getText());
+            
+            try {
+                //Set<String> photosIds = subir.Upload_photos(directorio.listFiles(IMAGE_FILTER), 1, 1, 1, tags);
+                Set<String> photosIds = subir.Upload_photos(directorio.listFiles(Filter.IMAGE_FILTER), 1, 1, 1, tags);
+                subir.ComprobarSubida();
+                
+                while(!subir.isFinish()){
+                    //TIEMPO HASTA QUE TERMINE, SE HACE ASÍ PARA PODER PINTAR COSAS EN LA INTERFAZ, con interfaz este while desaparece.
+                    System.out.print(".");
+                }
+                subir.publicarAlbum("Prueba2", "Esto es la prueba");                                
+                
+            } catch (FlickrException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            pantallaListar.setVisible(false);
+            pantallaInicio.setVisible(true);
     }//GEN-LAST:event_botonSubirActionPerformed
 
     private void cancelarListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarListarActionPerformed
@@ -382,32 +420,10 @@ public class GUI extends javax.swing.JFrame {
         pantallaListar.setVisible(false);
     }//GEN-LAST:event_cancelarListarActionPerformed
 
-    
-    // array of supported extensions (use a List if you prefer)
-    static final String[] EXTENSIONS = new String[]{
-        "gif", "png", "bmp", "jpeg", "jpg" // and other formats you need
-    };
-    // filter to identify images based on their extensions
-    static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
+    private void cuadroTextoEtiquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cuadroTextoEtiquetasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cuadroTextoEtiquetasActionPerformed
 
-        @Override
-        public boolean accept(final File dir, final String name) {
-            for (final String ext : EXTENSIONS) {
-                if (name.endsWith("." + ext)) {
-                    return (true);
-                }
-            }
-            return (false);
-        }
-    };
-    
-    static Flickr flickr;
-
-    static Set<String> pids = new HashSet<>();
-    final static AutorizacionesFlickr autorizacionesFlickr
-            = new AutorizacionesFlickr();
-    
-    
     /**
      * @param args the command line arguments
      */
@@ -435,7 +451,9 @@ public class GUI extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-  
+        //</editor-fold>
+        //</editor-fold>
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -448,6 +466,8 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton botonInicio;
     private javax.swing.JButton botonSubir;
     private javax.swing.JButton cancelarListar;
+    private javax.swing.JTextField cuadroTextoEtiquetas;
+    private javax.swing.JLabel labelEtiquetas;
     private java.awt.TextArea listadoArchivos;
     private javax.swing.JLayeredPane panelPorCapas;
     private javax.swing.JPanel panelSelectorDirectorio;
