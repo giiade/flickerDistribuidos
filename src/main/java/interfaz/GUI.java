@@ -54,6 +54,8 @@ public class GUI extends javax.swing.JFrame {
     private String [] ficheros;
     private File directorio;
     static Flickr flickr;
+    private Imagenes subir = new Imagenes(flickr);
+    private boolean nuevoAlbum = false;
 
     static Set<String> pids = new HashSet<>();
     final static AutorizacionesFlickr autorizacionesFlickr
@@ -98,7 +100,6 @@ public class GUI extends javax.swing.JFrame {
         RequestContext rContext = RequestContext.getRequestContext();
         rContext.setAuth(autorizacionesFlickr.getAuth());
                        
-        Scanner scanner = new Scanner(System.in);
         
         //Pantalla Inicio
         pantallaInicio.setVisible(true);
@@ -109,13 +110,16 @@ public class GUI extends javax.swing.JFrame {
         //Oculta el resto de paneles
         panelSelectorDirectorio.setVisible(false);
         pantallaListar.setVisible(false);
+        pantallaSubir.setVisible(false);
+        cuadroTextoEtiquetasSubir.setEditable(false);
+        pantallaAlbumGrupo.setVisible(false);
         
         //Hace que el Selector de ficheros solo muestre directorios
         selectorDirectorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         
         //Hace que el textArea que muestra la lista de archivos a subir no se
         //pueda modificar
-        listadoArchivos.setEditable(false);
+        listadoArchivosListar.setEditable(false);
     }
 
     /**
@@ -135,9 +139,27 @@ public class GUI extends javax.swing.JFrame {
         pantallaListar = new javax.swing.JPanel();
         botonSubir = new javax.swing.JButton();
         cancelarListar = new javax.swing.JButton();
-        listadoArchivos = new java.awt.TextArea();
-        cuadroTextoEtiquetas = new javax.swing.JTextField();
-        labelEtiquetas = new javax.swing.JLabel();
+        listadoArchivosListar = new java.awt.TextArea();
+        cuadroTextoEtiquetasListar = new javax.swing.JTextField();
+        labelEtiquetasListar = new javax.swing.JLabel();
+        pantallaSubir = new javax.swing.JPanel();
+        terminarSubir = new javax.swing.JButton();
+        botonSiguiente = new javax.swing.JButton();
+        listadoArchivosSubir = new java.awt.TextArea();
+        cuadroTextoEtiquetasSubir = new javax.swing.JTextField();
+        labelEtiquetasSubir = new javax.swing.JLabel();
+        pantallaAlbumGrupo = new javax.swing.JPanel();
+        cancelarAlbumGrupo = new javax.swing.JButton();
+        guardarAlbumGrupo = new javax.swing.JButton();
+        panelAlbum = new javax.swing.JPanel();
+        labelNombreAlbum = new javax.swing.JLabel();
+        botonNuevoAlbum = new javax.swing.JButton();
+        panelCapasTextoSeleccionAlbum = new javax.swing.JLayeredPane();
+        textoAlbumNuevo = new javax.swing.JTextField();
+        seleccionAlbum = new javax.swing.JComboBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        descripcionAlbum = new javax.swing.JTextArea();
+        labelDescripcionAlbum = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -231,13 +253,13 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        cuadroTextoEtiquetas.addActionListener(new java.awt.event.ActionListener() {
+        cuadroTextoEtiquetasListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cuadroTextoEtiquetasActionPerformed(evt);
+                cuadroTextoEtiquetasListarActionPerformed(evt);
             }
         });
 
-        labelEtiquetas.setText("Etiquetas:");
+        labelEtiquetasListar.setText("Etiquetas:");
 
         javax.swing.GroupLayout pantallaListarLayout = new javax.swing.GroupLayout(pantallaListar);
         pantallaListar.setLayout(pantallaListarLayout);
@@ -250,26 +272,227 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(cancelarListar)
                         .addGap(18, 18, 18)
                         .addComponent(botonSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(listadoArchivos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(listadoArchivosListar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
-                        .addComponent(labelEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelEtiquetasListar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cuadroTextoEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cuadroTextoEtiquetasListar, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(49, 49, 49))
         );
         pantallaListarLayout.setVerticalGroup(
             pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
                 .addGap(120, 120, 120)
-                .addComponent(listadoArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(listadoArchivosListar, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cuadroTextoEtiquetas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelEtiquetas))
+                    .addComponent(cuadroTextoEtiquetasListar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelEtiquetasListar))
                 .addGap(40, 40, 40)
                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelarListar))
+                .addGap(30, 30, 30))
+        );
+
+        pantallaSubir.setMaximumSize(new java.awt.Dimension(600, 600));
+        pantallaSubir.setMinimumSize(new java.awt.Dimension(600, 600));
+
+        terminarSubir.setText("Terminar");
+        terminarSubir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                terminarSubirActionPerformed(evt);
+            }
+        });
+
+        botonSiguiente.setText("Elegir Álbum/Grupo");
+        botonSiguiente.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        botonSiguiente.setMaximumSize(new java.awt.Dimension(80, 23));
+        botonSiguiente.setMinimumSize(new java.awt.Dimension(80, 23));
+        botonSiguiente.setPreferredSize(new java.awt.Dimension(80, 23));
+        botonSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSiguienteActionPerformed(evt);
+            }
+        });
+
+        cuadroTextoEtiquetasSubir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cuadroTextoEtiquetasSubirActionPerformed(evt);
+            }
+        });
+
+        labelEtiquetasSubir.setText("Etiquetas:");
+
+        javax.swing.GroupLayout pantallaSubirLayout = new javax.swing.GroupLayout(pantallaSubir);
+        pantallaSubir.setLayout(pantallaSubirLayout);
+        pantallaSubirLayout.setHorizontalGroup(
+            pantallaSubirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pantallaSubirLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(pantallaSubirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaSubirLayout.createSequentialGroup()
+                        .addComponent(terminarSubir)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(listadoArchivosSubir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaSubirLayout.createSequentialGroup()
+                        .addComponent(labelEtiquetasSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cuadroTextoEtiquetasSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(49, 49, 49))
+        );
+        pantallaSubirLayout.setVerticalGroup(
+            pantallaSubirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaSubirLayout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(listadoArchivosSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(pantallaSubirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cuadroTextoEtiquetasSubir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelEtiquetasSubir))
+                .addGap(40, 40, 40)
+                .addGroup(pantallaSubirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(terminarSubir))
+                .addGap(30, 30, 30))
+        );
+
+        pantallaAlbumGrupo.setMaximumSize(new java.awt.Dimension(600, 600));
+        pantallaAlbumGrupo.setMinimumSize(new java.awt.Dimension(600, 600));
+
+        cancelarAlbumGrupo.setText("Cancelar");
+        cancelarAlbumGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarAlbumGrupoActionPerformed(evt);
+            }
+        });
+
+        guardarAlbumGrupo.setText("Guardar Cambios");
+        guardarAlbumGrupo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        guardarAlbumGrupo.setMaximumSize(new java.awt.Dimension(80, 23));
+        guardarAlbumGrupo.setMinimumSize(new java.awt.Dimension(80, 23));
+        guardarAlbumGrupo.setPreferredSize(new java.awt.Dimension(80, 23));
+        guardarAlbumGrupo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarAlbumGrupoActionPerformed(evt);
+            }
+        });
+
+        panelAlbum.setBorder(javax.swing.BorderFactory.createTitledBorder("Álbum"));
+        panelAlbum.setMaximumSize(new java.awt.Dimension(600, 200));
+        panelAlbum.setMinimumSize(new java.awt.Dimension(600, 200));
+        panelAlbum.setPreferredSize(new java.awt.Dimension(600, 200));
+
+        labelNombreAlbum.setText("Nombre del Álbum:");
+
+        botonNuevoAlbum.setText("Nuevo");
+        botonNuevoAlbum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonNuevoAlbumActionPerformed(evt);
+            }
+        });
+
+        textoAlbumNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoAlbumNuevoActionPerformed(evt);
+            }
+        });
+
+        seleccionAlbum.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        seleccionAlbum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                seleccionAlbumActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelCapasTextoSeleccionAlbumLayout = new javax.swing.GroupLayout(panelCapasTextoSeleccionAlbum);
+        panelCapasTextoSeleccionAlbum.setLayout(panelCapasTextoSeleccionAlbumLayout);
+        panelCapasTextoSeleccionAlbumLayout.setHorizontalGroup(
+            panelCapasTextoSeleccionAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCapasTextoSeleccionAlbumLayout.createSequentialGroup()
+                .addGroup(panelCapasTextoSeleccionAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textoAlbumNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(seleccionAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
+        );
+        panelCapasTextoSeleccionAlbumLayout.setVerticalGroup(
+            panelCapasTextoSeleccionAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCapasTextoSeleccionAlbumLayout.createSequentialGroup()
+                .addComponent(textoAlbumNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(seleccionAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
+        );
+        panelCapasTextoSeleccionAlbum.setLayer(textoAlbumNuevo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        panelCapasTextoSeleccionAlbum.setLayer(seleccionAlbum, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        descripcionAlbum.setColumns(20);
+        descripcionAlbum.setRows(5);
+        jScrollPane1.setViewportView(descripcionAlbum);
+
+        labelDescripcionAlbum.setText("Descipción del Álbum:");
+
+        javax.swing.GroupLayout panelAlbumLayout = new javax.swing.GroupLayout(panelAlbum);
+        panelAlbum.setLayout(panelAlbumLayout);
+        panelAlbumLayout.setHorizontalGroup(
+            panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAlbumLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelCapasTextoSeleccionAlbum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(labelNombreAlbum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
+                        .addComponent(botonNuevoAlbum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                    .addGroup(panelAlbumLayout.createSequentialGroup()
+                        .addComponent(labelDescripcionAlbum)
+                        .addGap(0, 0, 0)))
+                .addContainerGap())
+        );
+        panelAlbumLayout.setVerticalGroup(
+            panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAlbumLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(botonNuevoAlbum)
+                .addGap(18, 18, 18)
+                .addComponent(labelNombreAlbum)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelCapasTextoSeleccionAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlbumLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(labelDescripcionAlbum)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout pantallaAlbumGrupoLayout = new javax.swing.GroupLayout(pantallaAlbumGrupo);
+        pantallaAlbumGrupo.setLayout(pantallaAlbumGrupoLayout);
+        pantallaAlbumGrupoLayout.setHorizontalGroup(
+            pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pantallaAlbumGrupoLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaAlbumGrupoLayout.createSequentialGroup()
+                        .addComponent(cancelarAlbumGrupo)
+                        .addGap(18, 18, 18)
+                        .addComponent(guardarAlbumGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(49, 49, 49))
+        );
+        pantallaAlbumGrupoLayout.setVerticalGroup(
+            pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaAlbumGrupoLayout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(panelAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
+                .addGroup(pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(guardarAlbumGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelarAlbumGrupo))
                 .addGap(30, 30, 30))
         );
 
@@ -283,13 +506,15 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(panelSelectorDirectorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(panelPorCapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(pantallaListar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pantallaListar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pantallaSubir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pantallaAlbumGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         panelPorCapasLayout.setVerticalGroup(
             panelPorCapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPorCapasLayout.createSequentialGroup()
                 .addComponent(pantallaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 9, Short.MAX_VALUE))
+                .addGap(0, 1170, Short.MAX_VALUE))
             .addGroup(panelPorCapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPorCapasLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -297,11 +522,17 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(panelPorCapasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelPorCapasLayout.createSequentialGroup()
                     .addComponent(pantallaListar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(pantallaSubir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(pantallaAlbumGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         panelPorCapas.setLayer(pantallaInicio, javax.swing.JLayeredPane.DEFAULT_LAYER);
         panelPorCapas.setLayer(panelSelectorDirectorio, javax.swing.JLayeredPane.DEFAULT_LAYER);
         panelPorCapas.setLayer(pantallaListar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        panelPorCapas.setLayer(pantallaSubir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        panelPorCapas.setLayer(pantallaAlbumGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -340,12 +571,12 @@ public class GUI extends javax.swing.JFrame {
             ficheros = Filter.filtroImagenes(directorio);                        
             
             for (int i=0; i<ficheros.length; i++) {
-                ficheros[i] = directorio + ficheros[i];
+                ficheros[i] = directorio + "\\" + ficheros[i];
             }
             
             System.out.println("Archivos seleccionados:");
             for (String fichero : ficheros) {
-                listadoArchivos.append(fichero + "\n");                
+                listadoArchivosListar.append(fichero + "\n");                
                 System.out.println(fichero);
             }
             
@@ -381,28 +612,47 @@ public class GUI extends javax.swing.JFrame {
 
     private void botonSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSubirActionPerformed
         // TODO add your handling code here:
-        Imagenes subir = new Imagenes(flickr);
+        
         String photoID;        
                       
-            String tags = (cuadroTextoEtiquetas.getText());
+        String tags = (cuadroTextoEtiquetasListar.getText());
             
-            try {
-                //Set<String> photosIds = subir.Upload_photos(directorio.listFiles(IMAGE_FILTER), 1, 1, 1, tags);
-                Set<String> photosIds = subir.Upload_photos(directorio.listFiles(Filter.IMAGE_FILTER), 1, 1, 1, tags);
-                subir.ComprobarSubida();
+        cuadroTextoEtiquetasSubir.setText(tags);
+        cuadroTextoEtiquetasListar.setEditable(false);
+        botonSubir.setEnabled(false);
+        cancelarListar.setEnabled(false);
+        
+        listadoArchivosListar.append(("\n" + "-------------------------------------------" 
+                                      + "\n" + "Subiendo Archivos:\n"));
+        
+        try {
+            //Set<String> photosIds = subir.Upload_photos(directorio.listFiles(IMAGE_FILTER), 1, 1, 1, tags);
+            Set<String> photosIds = subir.Upload_photos(directorio.listFiles(Filter.IMAGE_FILTER), 1, 1, 1, tags);
+            subir.ComprobarSubida(listadoArchivosListar);
+                                                                             
+            //listadoArchivosSubir.setText("");
                 
-                while(!subir.isFinish()){
-                    //TIEMPO HASTA QUE TERMINE, SE HACE ASÍ PARA PODER PINTAR COSAS EN LA INTERFAZ, con interfaz este while desaparece.
-                    System.out.print(".");
-                }
-                subir.publicarAlbum("Prueba2", "Esto es la prueba");                                
                 
-            } catch (FlickrException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } catch (FlickrException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        botonSubir.setEnabled(true);
+        cancelarListar.setEnabled(true);
+        listadoArchivosSubir.setText(listadoArchivosListar.getText());
+        cuadroTextoEtiquetasListar.setEditable(true);
+        cuadroTextoEtiquetasListar.setText("");
+        
+        //Pantalla fin de subida
+        pantallaListar.setVisible(false);
+        pantallaSubir.setVisible(true);        
+        Imagen imgLogo = new Imagen(600, 88,"flickr-logo.png");
+        pantallaSubir.add(imgLogo);
+        pantallaSubir.repaint();
+        
+        
+        //botonSiguiente.setEnabled(true);
             
-            pantallaListar.setVisible(false);
-            pantallaInicio.setVisible(true);
     }//GEN-LAST:event_botonSubirActionPerformed
 
     private void cancelarListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarListarActionPerformed
@@ -410,7 +660,8 @@ public class GUI extends javax.swing.JFrame {
         System.out.println("Se ha pulsado el botón Cancelar.");
         
         //Borra el listado de archivos del textArea
-        listadoArchivos.setText("");
+        listadoArchivosListar.setText("");
+        cuadroTextoEtiquetasListar.setText("");
         
         //Vuelve a la pantalla de inicio
         //Pantalla Inicio
@@ -420,9 +671,99 @@ public class GUI extends javax.swing.JFrame {
         pantallaListar.setVisible(false);
     }//GEN-LAST:event_cancelarListarActionPerformed
 
-    private void cuadroTextoEtiquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cuadroTextoEtiquetasActionPerformed
+    private void cuadroTextoEtiquetasListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cuadroTextoEtiquetasListarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cuadroTextoEtiquetasActionPerformed
+    }//GEN-LAST:event_cuadroTextoEtiquetasListarActionPerformed
+
+    private void botonSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSiguienteActionPerformed
+        // TODO add your handling code here:
+        pantallaSubir.setVisible(false);
+        
+        botonNuevoAlbum.setVisible(true);
+        textoAlbumNuevo.setVisible(false);
+        textoAlbumNuevo.setText("");
+        descripcionAlbum.setText("");
+        seleccionAlbum.setVisible(true);
+        pantallaAlbumGrupo.setVisible(true);
+        Imagen imgLogo = new Imagen(600, 88,"flickr-logo.png");
+        pantallaAlbumGrupo.add(imgLogo);
+        pantallaAlbumGrupo.repaint();
+        
+        
+        //Borra el listado de archivos del textArea
+        listadoArchivosSubir.setText("");
+        cuadroTextoEtiquetasSubir.setText("");
+    }//GEN-LAST:event_botonSiguienteActionPerformed
+
+    private void cuadroTextoEtiquetasSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cuadroTextoEtiquetasSubirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cuadroTextoEtiquetasSubirActionPerformed
+
+    private void terminarSubirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terminarSubirActionPerformed
+        // TODO add your handling code here:
+        try {
+            subir.publicarAlbum("Fotos", "Álbum creado por defecto");
+        } catch (FlickrException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //Borra el listado de archivos del textArea
+        listadoArchivosSubir.setText("");
+        cuadroTextoEtiquetasSubir.setText("");
+        
+        //Vuelve a la pantalla de inicio
+        //Pantalla Inicio
+        pantallaInicio.setVisible(true);             
+        
+        //Oculta el resto de paneles                
+        pantallaSubir.setVisible(false);
+        
+    }//GEN-LAST:event_terminarSubirActionPerformed
+
+    private void cancelarAlbumGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarAlbumGrupoActionPerformed
+        // TODO add your handling code here:
+        //Vuelve a la pantalla de inicio
+        //Pantalla Inicio
+        pantallaInicio.setVisible(true);             
+        
+        //Oculta el resto de paneles                
+        pantallaAlbumGrupo.setVisible(false);
+    }//GEN-LAST:event_cancelarAlbumGrupoActionPerformed
+
+    private void guardarAlbumGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarAlbumGrupoActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (nuevoAlbum) {
+                subir.publicarAlbum(textoAlbumNuevo.getText(),descripcionAlbum.getText());
+            } else {
+                subir.publicarAlbum("Fotos", "Álbum creado por defecto");
+            }
+        } catch (FlickrException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        nuevoAlbum = false;
+        
+        //Pantalla Inicio
+        pantallaInicio.setVisible(true);             
+        
+        //Oculta el resto de paneles                
+        pantallaAlbumGrupo.setVisible(false);
+    }//GEN-LAST:event_guardarAlbumGrupoActionPerformed
+
+    private void textoAlbumNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoAlbumNuevoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoAlbumNuevoActionPerformed
+
+    private void seleccionAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionAlbumActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_seleccionAlbumActionPerformed
+
+    private void botonNuevoAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevoAlbumActionPerformed
+        // TODO add your handling code here:
+        botonNuevoAlbum.setVisible(false);
+        textoAlbumNuevo.setVisible(true);
+        seleccionAlbum.setVisible(false);
+        nuevoAlbum = true;
+    }//GEN-LAST:event_botonNuevoAlbumActionPerformed
 
     /**
      * @param args the command line arguments
@@ -464,16 +805,34 @@ public class GUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonInicio;
+    private javax.swing.JButton botonNuevoAlbum;
+    private javax.swing.JButton botonSiguiente;
     private javax.swing.JButton botonSubir;
+    private javax.swing.JButton cancelarAlbumGrupo;
     private javax.swing.JButton cancelarListar;
-    private javax.swing.JTextField cuadroTextoEtiquetas;
-    private javax.swing.JLabel labelEtiquetas;
-    private java.awt.TextArea listadoArchivos;
+    private javax.swing.JTextField cuadroTextoEtiquetasListar;
+    private javax.swing.JTextField cuadroTextoEtiquetasSubir;
+    private javax.swing.JTextArea descripcionAlbum;
+    private javax.swing.JButton guardarAlbumGrupo;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelDescripcionAlbum;
+    private javax.swing.JLabel labelEtiquetasListar;
+    private javax.swing.JLabel labelEtiquetasSubir;
+    private javax.swing.JLabel labelNombreAlbum;
+    private java.awt.TextArea listadoArchivosListar;
+    private java.awt.TextArea listadoArchivosSubir;
+    private javax.swing.JPanel panelAlbum;
+    private javax.swing.JLayeredPane panelCapasTextoSeleccionAlbum;
     private javax.swing.JLayeredPane panelPorCapas;
     private javax.swing.JPanel panelSelectorDirectorio;
+    private javax.swing.JPanel pantallaAlbumGrupo;
     private javax.swing.JPanel pantallaInicio;
     private javax.swing.JPanel pantallaListar;
+    private javax.swing.JPanel pantallaSubir;
+    private javax.swing.JComboBox seleccionAlbum;
     private javax.swing.JFileChooser selectorDirectorio;
+    private javax.swing.JButton terminarSubir;
+    private javax.swing.JTextField textoAlbumNuevo;
     // End of variables declaration//GEN-END:variables
 
 }
