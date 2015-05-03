@@ -37,7 +37,7 @@ public class GUI extends javax.swing.JFrame {
  
             //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa
  
-            ImageIcon Img = new ImageIcon(getClass().getResource("interfaz/imagenes/" + this.img)); 
+            ImageIcon Img = new ImageIcon(getClass().getResource("/interfaz/imagenes/" + this.img)); 
  
             //se dibuja la imagen que tenemos en el paquete Images //dentro de un panel
  
