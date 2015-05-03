@@ -40,12 +40,13 @@ public class GUI extends javax.swing.JFrame {
             Dimension height = getSize();
  
             //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa
- 
-            ImageIcon Img = new ImageIcon(getClass().getResource("/interfaz/imagenes/" + this.img)); 
+            
+           //ImageIcon Img = new ImageIcon(getClass().getClassLoader().getResource("resources/" + this.img)); 
+            
  
             //se dibuja la imagen que tenemos en el paquete Images //dentro de un panel
  
-            grafico.drawImage(Img.getImage(), 0, 0, height.width, height.height, null);
+            //grafico.drawImage(Img.getImage(), 0, 0, height.width, height.height, null);
  
             setOpaque(false);
             super.paintComponent(grafico);
@@ -99,7 +100,6 @@ public class GUI extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(java.awt.Color.white);
         setResizable(false);
-        setSize(new java.awt.Dimension(600, 600));
 
         panelPorCapas.setMaximumSize(new java.awt.Dimension(600, 600));
         panelPorCapas.setMinimumSize(new java.awt.Dimension(600, 600));
@@ -194,11 +194,9 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
                         .addComponent(cancelarListar)
                         .addGap(18, 18, 18)
-                        .addComponent(botonSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
-                        .addComponent(listadoArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80))))
+                        .addComponent(botonSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(listadoArchivos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(80, 80, 80))
         );
         pantallaListarLayout.setVerticalGroup(
             pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,17 +244,21 @@ public class GUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelPorCapas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 620, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panelPorCapas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelPorCapas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 633, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(panelPorCapas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
