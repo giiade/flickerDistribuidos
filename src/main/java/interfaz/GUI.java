@@ -41,6 +41,7 @@ import java.awt.Graphics;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import jdk.nashorn.internal.runtime.Context;
 
 /**
  *
@@ -66,8 +67,10 @@ public class GUI extends javax.swing.JFrame {
             Dimension height = getSize();
  
             //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa
+            String Hola = this.img;
+            String hola = getClass().getClassLoader().getResource(this.img).getPath();
  
-            ImageIcon Img = new ImageIcon(getClass().getResource("/interfaz/imagenes/" + this.img)); 
+            ImageIcon Img = new ImageIcon(getClass().getClassLoader().getResource(this.img)); 
  
             //se dibuja la imagen que tenemos en el paquete Images //dentro de un panel
  
