@@ -106,6 +106,10 @@ public class Main {
                     System.out.print("");
                 }
                 subir.publicarAlbum("Prueba2", "Esto es la prueba");
+                
+                ArrayList<Group> grupos =  subir.getGrupos();
+                System.out.println(grupos.toString());
+                subir.publicarEnGrupo(grupos.get(0));
             } catch (FlickrException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }

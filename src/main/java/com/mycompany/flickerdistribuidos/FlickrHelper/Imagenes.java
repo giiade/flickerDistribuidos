@@ -21,6 +21,7 @@ import com.flickr4java.flickr.uploader.UploadMetaData;
 import com.flickr4java.flickr.uploader.Uploader;
 import com.mycompany.flickerdistribuidos.Main;
 import com.urjc.java.pruautorizacionesflickr.AutorizacionesFlickr;
+import java.awt.TextArea;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.lang.reflect.Array;
@@ -180,6 +181,37 @@ public class Imagenes {
         t.start();
 
     }
+    
+    public void ComprobarSubida(TextArea ta) {
+       
+                RequestContext rContext = RequestContext.getRequestContext();
+                rContext.setAuth(autorizacionesFlickr.getAuth());
+
+                UploadInterface uploadInterface = flickr.getUploadInterface();
+
+                try {
+                    List<Ticket> tickets = uploadInterface.checkTickets(photosIds);
+                    int completos = todosSubidos(tickets);
+
+                    while (completos < tickets.size()) {
+                        System.out.println("Progreso: " + completos + "ficheros subidos, " + (tickets.size() - completos) + "pendientes.");
+                        ta.setText("Progreso: " + completos + "ficheros subidos, " + (tickets.size() - completos) + "pendientes.\n");
+                        Thread.sleep(3000);
+                        completos = todosSubidos(uploadInterface.checkTickets(photosIds));
+                        System.out.println("Progreso: " + completos + "ficheros subidos, " + (tickets.size() - completos) + "pendientes.");
+                        ta.setText("Progreso: " + completos + "ficheros subidos, " + (tickets.size() - completos) + "pendientes.\n");
+                        
+                    }
+                    finish = true;
+
+                    //Hacemos algo con las imagenes.
+                    //DEBUG
+                } catch (FlickrException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Imagenes.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
 
     public void publicarAlbum(String titulo, String descripcion) throws FlickrException {
         PhotosetsInterface psInterface = flickr.getPhotosetsInterface();
@@ -193,29 +225,33 @@ public class Imagenes {
         System.out.println("Album Creado");
     }
 
-    public void publicarEnGrupo() throws FlickrException {
-        PhotosInterface p = flickr.getPhotosInterface();
-        String o;
-
+    public ArrayList<Group> getGrupos() throws FlickrException {
         PoolsInterface pools = flickr.getPoolsInterface();
+        ArrayList<Group> grupos = new ArrayList<>();
         if (pools.getGroups() == null) {
-            System.out.println("No perteneces a ningún grupo");
+            grupos = null;
         } else {
-            ArrayList<Group> grupos = (ArrayList< Group>) pools.getGroups();
-            //seleccionamos un Grupo
-            //TODO: Añadir código para poder elegir un grupo.
-            for (int i = 1; i < ids.size(); i++) {
-                o = p.getInfo(ids.get(i), "").getId();
-                pools.add(o, grupos.get(0).getId());
-            }
-
+            grupos = (ArrayList< Group>) pools.getGroups();
         }
+        return grupos;
     }
 
-    /**
-     * @return the finish
-     */
-    public boolean isFinish() {
+    public void publicarEnGrupo(Group grupo) throws FlickrException {
+        PhotosInterface p = flickr.getPhotosInterface();
+        PoolsInterface pools = flickr.getPoolsInterface();
+        String o;
+        for (int i = 0; i < ids.size(); i++) {
+            o = p.getInfo(ids.get(i), "").getId();
+            pools.add(o, grupo.getId());
+        }
+        Logger.getLogger(getClass().getName()).log(Level.INFO, "FOTOS AL GRUPO {0}", grupo.getName());
+    }
+
+
+/**
+ * @return the finish
+ */
+public boolean isFinish() {
         return finish;
     }
 
