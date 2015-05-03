@@ -124,6 +124,7 @@ public class Imagenes {
             Uploader u = flickr.getUploader();
             UploadMetaData metadatos = new UploadMetaData();
             metadatos.setAsync(true);
+            metadatos.setTitle(f.getName());
             metadatos.setContentType(setContentType(content));
             metadatos.setTags(tag);
             setPrivacy(privacidad, metadatos);
@@ -137,6 +138,7 @@ public class Imagenes {
 
     public int todosSubidos(List<Ticket> tickets) {
         int cont = 0;
+        ids.clear();
         for (Ticket t : tickets) {
             if (t.hasCompleted()) {
                 cont += 1;
