@@ -66,10 +66,7 @@ public class GUI extends javax.swing.JFrame {
         public void paint(Graphics grafico) {
             Dimension height = getSize();
  
-            //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa
-            String Hola = this.img;
-            String hola = getClass().getClassLoader().getResource(this.img).getPath();
- 
+            //Se selecciona la imagen que tenemos en el paquete de la //ruta del programa            
             ImageIcon Img = new ImageIcon(getClass().getClassLoader().getResource(this.img)); 
  
             //se dibuja la imagen que tenemos en el paquete Images //dentro de un panel
@@ -86,6 +83,21 @@ public class GUI extends javax.swing.JFrame {
      */
     public GUI() {
         initComponents();          
+        
+        flickr
+                = new Flickr(autorizacionesFlickr.getApi_key(),
+                        autorizacionesFlickr.getSecret(),
+                        new REST());
+        RequestContext rContext = RequestContext.getRequestContext();
+        rContext.setAuth(autorizacionesFlickr.getAuth());
+        
+        Imagenes subir = new Imagenes(flickr);
+        
+        Scanner scanner = new Scanner(System.in);
+        String sPath = null;
+        Path path;
+        File dir;
+        
         
         //Pantalla Inicio
         pantallaInicio.setVisible(true);
@@ -423,9 +435,7 @@ public class GUI extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
-        
-        
+  
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
