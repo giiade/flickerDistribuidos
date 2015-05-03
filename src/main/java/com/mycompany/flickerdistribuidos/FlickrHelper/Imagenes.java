@@ -21,7 +21,6 @@ import com.flickr4java.flickr.uploader.UploadMetaData;
 import com.flickr4java.flickr.uploader.Uploader;
 import com.mycompany.flickerdistribuidos.Main;
 import com.urjc.java.pruautorizacionesflickr.AutorizacionesFlickr;
-import java.awt.TextArea;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.lang.reflect.Array;
@@ -36,6 +35,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -182,7 +182,7 @@ public class Imagenes {
 
     }
     
-    public void ComprobarSubida(TextArea ta) {
+    public void ComprobarSubida(JTextArea ta) {
        
                 RequestContext rContext = RequestContext.getRequestContext();
                 rContext.setAuth(autorizacionesFlickr.getAuth());
