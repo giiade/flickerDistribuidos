@@ -5,6 +5,36 @@
  */
 package interfaz;
 
+import com.flickr4java.flickr.Flickr;
+import com.flickr4java.flickr.FlickrException;
+import com.flickr4java.flickr.REST;
+import com.flickr4java.flickr.RequestContext;
+import com.flickr4java.flickr.groups.Group;
+import com.flickr4java.flickr.groups.pools.PoolsInterface;
+import com.flickr4java.flickr.photos.PhotoSet;
+import com.flickr4java.flickr.photos.PhotosInterface;
+import com.flickr4java.flickr.photos.upload.Ticket;
+import com.flickr4java.flickr.photos.upload.UploadInterface;
+import com.flickr4java.flickr.photosets.Photoset;
+import com.flickr4java.flickr.photosets.PhotosetsInterface;
+import com.flickr4java.flickr.prefs.PrefsInterface;
+import com.flickr4java.flickr.uploader.UploadMetaData;
+import com.flickr4java.flickr.uploader.Uploader;
+import com.mycompany.flickerdistribuidos.FlickrHelper.Imagenes;
+import com.urjc.java.pruautorizacionesflickr.AutorizacionesFlickr;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import filterFile.Filter;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -337,6 +367,32 @@ public class GUI extends javax.swing.JFrame {
         pantallaListar.setVisible(false);
     }//GEN-LAST:event_cancelarListarActionPerformed
 
+    
+    // array of supported extensions (use a List if you prefer)
+    static final String[] EXTENSIONS = new String[]{
+        "gif", "png", "bmp", "jpeg", "jpg" // and other formats you need
+    };
+    // filter to identify images based on their extensions
+    static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
+
+        @Override
+        public boolean accept(final File dir, final String name) {
+            for (final String ext : EXTENSIONS) {
+                if (name.endsWith("." + ext)) {
+                    return (true);
+                }
+            }
+            return (false);
+        }
+    };
+    
+    static Flickr flickr;
+
+    static Set<String> pids = new HashSet<>();
+    final static AutorizacionesFlickr autorizacionesFlickr
+            = new AutorizacionesFlickr();
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -365,6 +421,8 @@ public class GUI extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
