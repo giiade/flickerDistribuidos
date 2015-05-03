@@ -44,6 +44,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -55,6 +56,7 @@ public class GUI extends javax.swing.JFrame {
     private File directorio;
     static Flickr flickr;
     private Imagenes subir;
+    ArrayList<Group> grupos;
 
     static Set<String> pids = new HashSet<>();
     final static AutorizacionesFlickr autorizacionesFlickr
@@ -119,6 +121,8 @@ public class GUI extends javax.swing.JFrame {
         //Hace que el textArea que muestra la lista de archivos a subir no se
         //pueda modificar
         listadoArchivosListar.setEditable(false);
+        listadoArchivosSubir.setEditable(false);
+        cuadroTextoEtiquetasSubir.setEditable(false);
     }
 
     /**
@@ -140,16 +144,18 @@ public class GUI extends javax.swing.JFrame {
         pantallaListar = new javax.swing.JPanel();
         botonSubir = new javax.swing.JButton();
         cancelarListar = new javax.swing.JButton();
-        listadoArchivosListar = new java.awt.TextArea();
         cuadroTextoEtiquetasListar = new javax.swing.JTextField();
         labelEtiquetasListar = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listadoArchivosListar = new javax.swing.JTextArea();
         capaspantallaSubir = new javax.swing.JLayeredPane();
         pantallaSubir = new javax.swing.JPanel();
         terminarSubir = new javax.swing.JButton();
         botonSiguiente = new javax.swing.JButton();
-        listadoArchivosSubir = new java.awt.TextArea();
         cuadroTextoEtiquetasSubir = new javax.swing.JTextField();
         labelEtiquetasSubir = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        listadoArchivosSubir = new javax.swing.JTextArea();
         capaspantallaAlbumGrupo = new javax.swing.JLayeredPane();
         pantallaAlbumGrupo = new javax.swing.JPanel();
         cancelarAlbumGrupo = new javax.swing.JButton();
@@ -160,6 +166,9 @@ public class GUI extends javax.swing.JFrame {
         descripcionAlbum = new javax.swing.JTextArea();
         labelDescripcionAlbum = new javax.swing.JLabel();
         textoAlbumNuevo = new javax.swing.JTextField();
+        panelGrupos = new javax.swing.JPanel();
+        labelGrupo = new javax.swing.JLabel();
+        jComboBoxGrupos = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -245,9 +254,9 @@ public class GUI extends javax.swing.JFrame {
         panelSelectorDirectorioLayout.setVerticalGroup(
             panelSelectorDirectorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSelectorDirectorioLayout.createSequentialGroup()
-                .addGap(120, 120, 120)
+                .addGap(130, 130, 130)
                 .addComponent(selectorDirectorio, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout capaspanelSelectorDirectorioLayout = new javax.swing.GroupLayout(capaspanelSelectorDirectorio);
@@ -267,13 +276,13 @@ public class GUI extends javax.swing.JFrame {
         );
         capaspanelSelectorDirectorio.setLayer(panelSelectorDirectorio, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        capaspantallaListar.setMaximumSize(new java.awt.Dimension(600, 600));
-        capaspantallaListar.setMinimumSize(new java.awt.Dimension(600, 600));
-        capaspantallaListar.setPreferredSize(new java.awt.Dimension(600, 600));
+        capaspantallaListar.setMaximumSize(new java.awt.Dimension(600, 589));
+        capaspantallaListar.setMinimumSize(new java.awt.Dimension(600, 589));
+        capaspantallaListar.setPreferredSize(new java.awt.Dimension(600, 589));
 
-        pantallaListar.setMaximumSize(new java.awt.Dimension(600, 600));
-        pantallaListar.setMinimumSize(new java.awt.Dimension(600, 600));
-        pantallaListar.setPreferredSize(new java.awt.Dimension(600, 600));
+        pantallaListar.setMaximumSize(new java.awt.Dimension(600, 589));
+        pantallaListar.setMinimumSize(new java.awt.Dimension(600, 589));
+        pantallaListar.setPreferredSize(new java.awt.Dimension(600, 589));
 
         botonSubir.setText("Subir Fotos");
         botonSubir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -301,6 +310,10 @@ public class GUI extends javax.swing.JFrame {
 
         labelEtiquetasListar.setText("Etiquetas:");
 
+        listadoArchivosListar.setColumns(20);
+        listadoArchivosListar.setRows(5);
+        jScrollPane2.setViewportView(listadoArchivosListar);
+
         javax.swing.GroupLayout pantallaListarLayout = new javax.swing.GroupLayout(pantallaListar);
         pantallaListar.setLayout(pantallaListarLayout);
         pantallaListarLayout.setHorizontalGroup(
@@ -308,27 +321,28 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(pantallaListarLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
-                        .addComponent(cancelarListar)
-                        .addGap(18, 18, 18)
-                        .addComponent(botonSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(listadoArchivosListar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
-                        .addComponent(labelEtiquetasListar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cuadroTextoEtiquetasListar, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(49, 49, 49))
+                    .addComponent(jScrollPane2)
+                    .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
+                            .addComponent(cancelarListar)
+                            .addGap(18, 18, 18)
+                            .addComponent(botonSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
+                            .addComponent(labelEtiquetasListar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cuadroTextoEtiquetasListar, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         pantallaListarLayout.setVerticalGroup(
             pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(listadoArchivosListar, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(130, 130, 130)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cuadroTextoEtiquetasListar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelEtiquetasListar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelarListar))
@@ -339,14 +353,12 @@ public class GUI extends javax.swing.JFrame {
         capaspantallaListar.setLayout(capaspantallaListarLayout);
         capaspantallaListarLayout.setHorizontalGroup(
             capaspantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(capaspantallaListarLayout.createSequentialGroup()
-                .addComponent(pantallaListar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(pantallaListar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         capaspantallaListarLayout.setVerticalGroup(
             capaspantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(capaspantallaListarLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addContainerGap()
                 .addComponent(pantallaListar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -356,9 +368,9 @@ public class GUI extends javax.swing.JFrame {
         capaspantallaSubir.setMinimumSize(new java.awt.Dimension(600, 600));
         capaspantallaSubir.setPreferredSize(new java.awt.Dimension(600, 600));
 
-        pantallaSubir.setMaximumSize(new java.awt.Dimension(600, 600));
-        pantallaSubir.setMinimumSize(new java.awt.Dimension(600, 600));
-        pantallaSubir.setPreferredSize(new java.awt.Dimension(600, 600));
+        pantallaSubir.setMaximumSize(new java.awt.Dimension(600, 589));
+        pantallaSubir.setMinimumSize(new java.awt.Dimension(600, 589));
+        pantallaSubir.setPreferredSize(new java.awt.Dimension(600, 589));
 
         terminarSubir.setText("Terminar");
         terminarSubir.addActionListener(new java.awt.event.ActionListener() {
@@ -386,6 +398,10 @@ public class GUI extends javax.swing.JFrame {
 
         labelEtiquetasSubir.setText("Etiquetas:");
 
+        listadoArchivosSubir.setColumns(20);
+        listadoArchivosSubir.setRows(5);
+        jScrollPane3.setViewportView(listadoArchivosSubir);
+
         javax.swing.GroupLayout pantallaSubirLayout = new javax.swing.GroupLayout(pantallaSubir);
         pantallaSubir.setLayout(pantallaSubirLayout);
         pantallaSubirLayout.setHorizontalGroup(
@@ -393,27 +409,28 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(pantallaSubirLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(pantallaSubirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaSubirLayout.createSequentialGroup()
-                        .addComponent(terminarSubir)
-                        .addGap(18, 18, 18)
-                        .addComponent(botonSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(listadoArchivosSubir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaSubirLayout.createSequentialGroup()
-                        .addComponent(labelEtiquetasSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cuadroTextoEtiquetasSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(49, 49, 49))
+                    .addComponent(jScrollPane3)
+                    .addGroup(pantallaSubirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaSubirLayout.createSequentialGroup()
+                            .addComponent(terminarSubir)
+                            .addGap(18, 18, 18)
+                            .addComponent(botonSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaSubirLayout.createSequentialGroup()
+                            .addComponent(labelEtiquetasSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cuadroTextoEtiquetasSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         pantallaSubirLayout.setVerticalGroup(
             pantallaSubirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaSubirLayout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(listadoArchivosSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(130, 130, 130)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addGroup(pantallaSubirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cuadroTextoEtiquetasSubir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelEtiquetasSubir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(pantallaSubirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(terminarSubir))
@@ -432,18 +449,19 @@ public class GUI extends javax.swing.JFrame {
         capaspantallaSubirLayout.setVerticalGroup(
             capaspantallaSubirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(capaspantallaSubirLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(pantallaSubir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         capaspantallaSubir.setLayer(pantallaSubir, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        capaspantallaAlbumGrupo.setMaximumSize(new java.awt.Dimension(600, 600));
-        capaspantallaAlbumGrupo.setMinimumSize(new java.awt.Dimension(600, 600));
-        capaspantallaAlbumGrupo.setPreferredSize(new java.awt.Dimension(600, 600));
+        capaspantallaAlbumGrupo.setMaximumSize(new java.awt.Dimension(600, 589));
+        capaspantallaAlbumGrupo.setMinimumSize(new java.awt.Dimension(600, 589));
+        capaspantallaAlbumGrupo.setPreferredSize(new java.awt.Dimension(600, 589));
 
-        pantallaAlbumGrupo.setMaximumSize(new java.awt.Dimension(600, 600));
-        pantallaAlbumGrupo.setMinimumSize(new java.awt.Dimension(600, 600));
-        pantallaAlbumGrupo.setPreferredSize(new java.awt.Dimension(600, 600));
+        pantallaAlbumGrupo.setMaximumSize(new java.awt.Dimension(600, 589));
+        pantallaAlbumGrupo.setMinimumSize(new java.awt.Dimension(600, 589));
+        pantallaAlbumGrupo.setPreferredSize(new java.awt.Dimension(600, 589));
 
         cancelarAlbumGrupo.setText("Cancelar");
         cancelarAlbumGrupo.addActionListener(new java.awt.event.ActionListener() {
@@ -464,9 +482,9 @@ public class GUI extends javax.swing.JFrame {
         });
 
         panelAlbum.setBorder(javax.swing.BorderFactory.createTitledBorder("Álbum"));
-        panelAlbum.setMaximumSize(new java.awt.Dimension(600, 200));
-        panelAlbum.setMinimumSize(new java.awt.Dimension(600, 200));
-        panelAlbum.setPreferredSize(new java.awt.Dimension(600, 200));
+        panelAlbum.setMaximumSize(new java.awt.Dimension(550, 200));
+        panelAlbum.setMinimumSize(new java.awt.Dimension(550, 200));
+        panelAlbum.setPreferredSize(new java.awt.Dimension(550, 200));
 
         labelNombreAlbum.setText("Nombre del Álbum:");
 
@@ -491,7 +509,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textoAlbumNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 21, Short.MAX_VALUE)
                 .addGroup(panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelDescripcionAlbum)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -513,18 +531,53 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        panelGrupos.setBorder(javax.swing.BorderFactory.createTitledBorder("Grupo"));
+        panelGrupos.setMaximumSize(new java.awt.Dimension(550, 100));
+        panelGrupos.setMinimumSize(new java.awt.Dimension(550, 100));
+        panelGrupos.setPreferredSize(new java.awt.Dimension(550, 100));
+
+        labelGrupo.setText("Grupo:");
+
+        jComboBoxGrupos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxGruposActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelGruposLayout = new javax.swing.GroupLayout(panelGrupos);
+        panelGrupos.setLayout(panelGruposLayout);
+        panelGruposLayout.setHorizontalGroup(
+            panelGruposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGruposLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelGruposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(370, Short.MAX_VALUE))
+        );
+        panelGruposLayout.setVerticalGroup(
+            panelGruposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelGruposLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelGrupo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBoxGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout pantallaAlbumGrupoLayout = new javax.swing.GroupLayout(pantallaAlbumGrupo);
         pantallaAlbumGrupo.setLayout(pantallaAlbumGrupoLayout);
         pantallaAlbumGrupoLayout.setHorizontalGroup(
             pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pantallaAlbumGrupoLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(pantallaAlbumGrupoLayout.createSequentialGroup()
                         .addComponent(cancelarAlbumGrupo)
                         .addGap(18, 18, 18)
                         .addComponent(guardarAlbumGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelGrupos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(53, 53, 53))
         );
         pantallaAlbumGrupoLayout.setVerticalGroup(
@@ -532,7 +585,9 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaAlbumGrupoLayout.createSequentialGroup()
                 .addGap(120, 120, 120)
                 .addComponent(panelAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addComponent(panelGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addGroup(pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(guardarAlbumGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelarAlbumGrupo))
@@ -550,8 +605,9 @@ public class GUI extends javax.swing.JFrame {
         capaspantallaAlbumGrupoLayout.setVerticalGroup(
             capaspantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(capaspantallaAlbumGrupoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(pantallaAlbumGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         capaspantallaAlbumGrupo.setLayer(pantallaAlbumGrupo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -635,7 +691,7 @@ public class GUI extends javax.swing.JFrame {
             Set<String> photosIds = subir.Upload_photos(directorio.listFiles(Filter.IMAGE_FILTER), 1, 1, 1, tags);
             subir.ComprobarSubida(listadoArchivosListar);
                                                                              
-            //listadoArchivosSubir.setText("");
+            
                 
                 
         } catch (FlickrException ex) {
@@ -691,6 +747,19 @@ public class GUI extends javax.swing.JFrame {
         pantallaAlbumGrupo.add(imgLogo);
         pantallaAlbumGrupo.repaint();
         
+        //Recupera los grupos
+        try {
+            grupos = new ArrayList(subir.getGrupos());
+            String [] gruposJBox = new String[grupos.size()];
+            for (int i=0; i<grupos.size(); i++) {
+                gruposJBox[i] = grupos.get(i).getName();
+            }    
+            
+            jComboBoxGrupos = new JComboBox(gruposJBox);
+            
+        } catch (FlickrException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }               
         
         //Borra el listado de archivos del textArea
         listadoArchivosSubir.setText("");
@@ -735,6 +804,10 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             subir.publicarAlbum(textoAlbumNuevo.getText(),descripcionAlbum.getText());
+            
+            Group grupo = grupos.get(jComboBoxGrupos.getSelectedIndex());
+            
+            subir.publicarEnGrupo(grupo);
             
         } catch (FlickrException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -798,6 +871,10 @@ public class GUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_selectorDirectorioActionPerformed
 
+    private void jComboBoxGruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxGruposActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxGruposActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -851,14 +928,19 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTextField cuadroTextoEtiquetasSubir;
     private javax.swing.JTextArea descripcionAlbum;
     private javax.swing.JButton guardarAlbumGrupo;
+    private javax.swing.JComboBox jComboBoxGrupos;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel labelDescripcionAlbum;
     private javax.swing.JLabel labelEtiquetasListar;
     private javax.swing.JLabel labelEtiquetasSubir;
+    private javax.swing.JLabel labelGrupo;
     private javax.swing.JLabel labelNombreAlbum;
-    private java.awt.TextArea listadoArchivosListar;
-    private java.awt.TextArea listadoArchivosSubir;
+    private javax.swing.JTextArea listadoArchivosListar;
+    private javax.swing.JTextArea listadoArchivosSubir;
     private javax.swing.JPanel panelAlbum;
+    private javax.swing.JPanel panelGrupos;
     private javax.swing.JPanel panelSelectorDirectorio;
     private javax.swing.JPanel pantallaAlbumGrupo;
     private javax.swing.JPanel pantallaInicio;
