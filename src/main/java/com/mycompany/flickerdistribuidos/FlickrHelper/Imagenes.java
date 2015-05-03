@@ -203,10 +203,10 @@ public class Imagenes {
         } else {
             ArrayList<Group> grupos = (ArrayList< Group>) pools.getGroups();
             //seleccionamos un Grupo
+            //TODO: Añadir código para poder elegir un grupo.
             for (int i = 1; i < ids.size(); i++) {
                 o = p.getInfo(ids.get(i), "").getId();
                 pools.add(o, grupos.get(0).getId());
-
             }
 
         }

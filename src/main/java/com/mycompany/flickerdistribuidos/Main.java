@@ -40,9 +40,7 @@ import java.util.logging.Logger;
  * @author JulioLopez
  */
 public class Main {
-    // TODO: Reestructurar clase para elegir archivos y subirlos.
-    //se tendrá que actualizar cada 3 segundos para mostrar estado de subida
-    //LLamaremos a la clase de subida desde aquí.
+
 
     // array of supported extensions (use a List if you prefer)
     static final String[] EXTENSIONS = new String[]{
