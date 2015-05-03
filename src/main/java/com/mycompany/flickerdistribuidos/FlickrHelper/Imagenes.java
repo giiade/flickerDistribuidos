@@ -195,11 +195,11 @@ public class Imagenes {
 
                     while (completos < tickets.size()) {
                         System.out.println("Progreso: " + completos + "ficheros subidos, " + (tickets.size() - completos) + "pendientes.");
-                        ta.setText("Progreso: " + completos + "ficheros subidos, " + (tickets.size() - completos) + "pendientes.\n");
+                        ta.append("Progreso: " + completos + "ficheros subidos, " + (tickets.size() - completos) + "pendientes.\n");
                         Thread.sleep(3000);
                         completos = todosSubidos(uploadInterface.checkTickets(photosIds));
                         System.out.println("Progreso: " + completos + "ficheros subidos, " + (tickets.size() - completos) + "pendientes.");
-                        ta.setText("Progreso: " + completos + "ficheros subidos, " + (tickets.size() - completos) + "pendientes.\n");
+                        ta.append("Progreso: " + completos + "ficheros subidos, " + (tickets.size() - completos) + "pendientes.\n");
                         
                     }
                     finish = true;
