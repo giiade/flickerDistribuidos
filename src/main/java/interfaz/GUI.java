@@ -158,7 +158,7 @@ public class GUI extends javax.swing.JFrame {
         listadoArchivosSubir = new javax.swing.JTextArea();
         capaspantallaAlbumGrupo = new javax.swing.JLayeredPane();
         pantallaAlbumGrupo = new javax.swing.JPanel();
-        cancelarAlbumGrupo = new javax.swing.JButton();
+        terminarAlbumGrupo = new javax.swing.JButton();
         guardarAlbumGrupo = new javax.swing.JButton();
         panelAlbum = new javax.swing.JPanel();
         labelNombreAlbum = new javax.swing.JLabel();
@@ -166,9 +166,18 @@ public class GUI extends javax.swing.JFrame {
         descripcionAlbum = new javax.swing.JTextArea();
         labelDescripcionAlbum = new javax.swing.JLabel();
         textoAlbumNuevo = new javax.swing.JTextField();
+        labelTContenido = new javax.swing.JLabel();
+        jComboBoxTContenido = new javax.swing.JComboBox();
+        labelPrivacidad = new javax.swing.JLabel();
+        jComboBoxPrivacidad = new javax.swing.JComboBox();
+        labelSeguridad = new javax.swing.JLabel();
+        jComboBoxSeguridad = new javax.swing.JComboBox();
         panelGrupos = new javax.swing.JPanel();
         labelGrupo = new javax.swing.JLabel();
         jComboBoxGrupos = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        informacionLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -463,14 +472,14 @@ public class GUI extends javax.swing.JFrame {
         pantallaAlbumGrupo.setMinimumSize(new java.awt.Dimension(600, 589));
         pantallaAlbumGrupo.setPreferredSize(new java.awt.Dimension(600, 589));
 
-        cancelarAlbumGrupo.setText("Cancelar");
-        cancelarAlbumGrupo.addActionListener(new java.awt.event.ActionListener() {
+        terminarAlbumGrupo.setText("Terminar");
+        terminarAlbumGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelarAlbumGrupoActionPerformed(evt);
+                terminarAlbumGrupoActionPerformed(evt);
             }
         });
 
-        guardarAlbumGrupo.setText("Guardar Cambios");
+        guardarAlbumGrupo.setText("Añadir a Álbum");
         guardarAlbumGrupo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         guardarAlbumGrupo.setMaximumSize(new java.awt.Dimension(80, 23));
         guardarAlbumGrupo.setMinimumSize(new java.awt.Dimension(80, 23));
@@ -481,7 +490,7 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        panelAlbum.setBorder(javax.swing.BorderFactory.createTitledBorder("Álbum"));
+        panelAlbum.setBorder(javax.swing.BorderFactory.createTitledBorder("Álbum y Opciones"));
         panelAlbum.setMaximumSize(new java.awt.Dimension(550, 200));
         panelAlbum.setMinimumSize(new java.awt.Dimension(550, 200));
         panelAlbum.setPreferredSize(new java.awt.Dimension(550, 200));
@@ -500,6 +509,23 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        labelTContenido.setText("Tipo de contenido:");
+
+        jComboBoxTContenido.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Público", "Amigos", "Familia", "Familia y amigos", "Privado" }));
+
+        labelPrivacidad.setText("Privacidad:");
+
+        jComboBoxPrivacidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Foto", "Captura de pantalla", "Otro" }));
+        jComboBoxPrivacidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxPrivacidadActionPerformed(evt);
+            }
+        });
+
+        labelSeguridad.setText("Seguridad:");
+
+        jComboBoxSeguridad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seguro", "Moderado", "Restringido" }));
+
         javax.swing.GroupLayout panelAlbumLayout = new javax.swing.GroupLayout(panelAlbum);
         panelAlbum.setLayout(panelAlbumLayout);
         panelAlbumLayout.setHorizontalGroup(
@@ -508,27 +534,46 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelNombreAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textoAlbumNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 21, Short.MAX_VALUE)
-                .addGroup(panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textoAlbumNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelDescripcionAlbum)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelTContenido)
+                    .addComponent(labelPrivacidad)
+                    .addComponent(labelSeguridad)
+                    .addComponent(jComboBoxTContenido, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBoxPrivacidad, 0, 155, Short.MAX_VALUE)
+                    .addComponent(jComboBoxSeguridad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelAlbumLayout.setVerticalGroup(
             panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAlbumLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNombreAlbum)
-                    .addComponent(labelDescripcionAlbum))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelTContenido)
+                    .addComponent(labelNombreAlbum, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoxTContenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textoAlbumNuevo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelAlbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelAlbumLayout.createSequentialGroup()
-                        .addComponent(textoAlbumNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelDescripcionAlbum)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
+                    .addGroup(panelAlbumLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelPrivacidad)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxPrivacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(labelSeguridad)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBoxSeguridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelGrupos.setBorder(javax.swing.BorderFactory.createTitledBorder("Grupo"));
@@ -544,6 +589,15 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Añadir a Grupo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("<html>Si quiere que se incluya en algún grupo, seleccione un grupo y pulse Añadir a Grupo.</html>");
+
         javax.swing.GroupLayout panelGruposLayout = new javax.swing.GroupLayout(panelGrupos);
         panelGrupos.setLayout(panelGruposLayout);
         panelGruposLayout.setHorizontalGroup(
@@ -551,18 +605,26 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(panelGruposLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelGruposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(370, Short.MAX_VALUE))
+                    .addGroup(panelGruposLayout.createSequentialGroup()
+                        .addComponent(jComboBoxGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
+                    .addComponent(labelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelGruposLayout.setVerticalGroup(
             panelGruposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGruposLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelGrupo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBoxGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelGruposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addContainerGap(23, Short.MAX_VALUE))
+            .addComponent(jLabel1)
         );
 
         javax.swing.GroupLayout pantallaAlbumGrupoLayout = new javax.swing.GroupLayout(pantallaAlbumGrupo);
@@ -570,27 +632,34 @@ public class GUI extends javax.swing.JFrame {
         pantallaAlbumGrupoLayout.setHorizontalGroup(
             pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pantallaAlbumGrupoLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pantallaAlbumGrupoLayout.createSequentialGroup()
-                        .addComponent(cancelarAlbumGrupo)
-                        .addGap(18, 18, 18)
-                        .addComponent(guardarAlbumGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelGrupos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53))
+                        .addContainerGap()
+                        .addComponent(informacionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pantallaAlbumGrupoLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(pantallaAlbumGrupoLayout.createSequentialGroup()
+                                .addComponent(terminarAlbumGrupo)
+                                .addGap(18, 18, 18)
+                                .addComponent(guardarAlbumGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(panelAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelGrupos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(33, 33, 33))
         );
         pantallaAlbumGrupoLayout.setVerticalGroup(
             pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaAlbumGrupoLayout.createSequentialGroup()
                 .addGap(120, 120, 120)
-                .addComponent(panelAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addComponent(panelAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelGrupos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(informacionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(pantallaAlbumGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(guardarAlbumGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancelarAlbumGrupo))
+                    .addComponent(terminarAlbumGrupo))
                 .addGap(40, 40, 40))
         );
 
@@ -750,12 +819,16 @@ public class GUI extends javax.swing.JFrame {
         //Recupera los grupos
         try {
             grupos = new ArrayList(subir.getGrupos());
-            String [] gruposJBox = new String[grupos.size()];
-            for (int i=0; i<grupos.size(); i++) {
-                gruposJBox[i] = grupos.get(i).getName();
-            }    
-            
-            jComboBoxGrupos = new JComboBox(gruposJBox);
+            //String [] gruposJBox = new String[grupos.size()];
+            /*for (int i=0; i<grupos.size(); i++) {
+                //gruposJBox[i] = grupos.get(i).getName();
+                jComboBoxGrupos.addItem(grupos.get(i).getName());
+            } */   
+            for (Group grupo : grupos) {
+                //gruposJBox[i] = grupos.get(i).getName();
+                jComboBoxGrupos.addItem(grupo.getName());
+            }
+            //jComboBoxGrupos = new JComboBox(gruposJBox);
             
         } catch (FlickrException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -790,7 +863,7 @@ public class GUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_terminarSubirActionPerformed
 
-    private void cancelarAlbumGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarAlbumGrupoActionPerformed
+    private void terminarAlbumGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_terminarAlbumGrupoActionPerformed
         // TODO add your handling code here:
         //Vuelve a la pantalla de inicio
         //Pantalla Inicio
@@ -798,17 +871,13 @@ public class GUI extends javax.swing.JFrame {
         
         //Oculta el resto de paneles                
         pantallaAlbumGrupo.setVisible(false);
-    }//GEN-LAST:event_cancelarAlbumGrupoActionPerformed
+    }//GEN-LAST:event_terminarAlbumGrupoActionPerformed
 
     private void guardarAlbumGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarAlbumGrupoActionPerformed
         // TODO add your handling code here:
         try {
             subir.publicarAlbum(textoAlbumNuevo.getText(),descripcionAlbum.getText());
-            
-            Group grupo = grupos.get(jComboBoxGrupos.getSelectedIndex());
-            
-            subir.publicarEnGrupo(grupo);
-            
+                        
         } catch (FlickrException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }        
@@ -875,6 +944,22 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxGruposActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Group grupo = grupos.get(jComboBoxGrupos.getSelectedIndex());
+            
+        try {
+            subir.publicarEnGrupo(grupo);
+            informacionLabel.setText("<html>Fotos añadidas al grupo con éxito.</html>");
+        } catch (FlickrException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBoxPrivacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPrivacidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxPrivacidadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -917,7 +1002,6 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JButton botonInicio;
     private javax.swing.JButton botonSiguiente;
     private javax.swing.JButton botonSubir;
-    private javax.swing.JButton cancelarAlbumGrupo;
     private javax.swing.JButton cancelarListar;
     private javax.swing.JLayeredPane capaspanelSelectorDirectorio;
     private javax.swing.JLayeredPane capaspantallaAlbumGrupo;
@@ -928,7 +1012,13 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTextField cuadroTextoEtiquetasSubir;
     private javax.swing.JTextArea descripcionAlbum;
     private javax.swing.JButton guardarAlbumGrupo;
+    private javax.swing.JLabel informacionLabel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBoxGrupos;
+    private javax.swing.JComboBox jComboBoxPrivacidad;
+    private javax.swing.JComboBox jComboBoxSeguridad;
+    private javax.swing.JComboBox jComboBoxTContenido;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -937,6 +1027,9 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JLabel labelEtiquetasSubir;
     private javax.swing.JLabel labelGrupo;
     private javax.swing.JLabel labelNombreAlbum;
+    private javax.swing.JLabel labelPrivacidad;
+    private javax.swing.JLabel labelSeguridad;
+    private javax.swing.JLabel labelTContenido;
     private javax.swing.JTextArea listadoArchivosListar;
     private javax.swing.JTextArea listadoArchivosSubir;
     private javax.swing.JPanel panelAlbum;
@@ -947,6 +1040,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JPanel pantallaListar;
     private javax.swing.JPanel pantallaSubir;
     private javax.swing.JFileChooser selectorDirectorio;
+    private javax.swing.JButton terminarAlbumGrupo;
     private javax.swing.JButton terminarSubir;
     private javax.swing.JTextField textoAlbumNuevo;
     // End of variables declaration//GEN-END:variables
