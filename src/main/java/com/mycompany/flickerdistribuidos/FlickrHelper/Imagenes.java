@@ -60,11 +60,11 @@ public class Imagenes {
 
     public String setContentType(int p) throws FlickrException {
         switch (p) {
-            case 1:
+            case 0:
                 return Flickr.CONTENTTYPE_PHOTO;
-            case 2:
+            case 1:
                 return Flickr.CONTENTTYPE_SCREENSHOT;
-            case 3:
+            case 2:
                 return Flickr.CONTENTTYPE_OTHER;
             default:
                 PrefsInterface prefi = flickr.getPrefsInterface();
@@ -74,18 +74,29 @@ public class Imagenes {
 
     public void setPrivacy(int p, UploadMetaData m) {
         switch (p) {
-            case 1:
+            case 0:
                 m.setPublicFlag(true);
+                break;
+                
+            case 1:
+                m.setPublicFlag(false);
+                m.setFamilyFlag(false);
+                m.setFriendFlag(true);
+                break;
             case 2:
+                m.setPublicFlag(false);
                 m.setFriendFlag(true);
+                m.setFamilyFlag(true);
+                break;
             case 3:
-                m.setFamilyFlag(true);
-            case 4:
+                m.setPublicFlag(false);
                 m.setFamilyFlag(true);
                 m.setFriendFlag(true);
-            case 5:
+                break;
+            case 4:
+                m.setPublicFlag(false);
                 m.setHidden(Boolean.TRUE);
-
+                break;
             default:
                 m.setPublicFlag(true);
         }
@@ -93,11 +104,11 @@ public class Imagenes {
 
     public String setSafetyLevel(int p) throws FlickrException {
         switch (p) {
-            case 1:
+            case 0:
                 return Flickr.SAFETYLEVEL_SAFE;
-            case 2:
+            case 1:
                 return Flickr.SAFETYLEVEL_MODERATE;
-            case 3:
+            case 2:
                 return Flickr.SAFETYLEVEL_RESTRICTED;
             default:
                 return Flickr.SAFETYLEVEL_MODERATE;
