@@ -765,14 +765,9 @@ public class GUI extends javax.swing.JFrame {
             //Set<String> photosIds = subir.Upload_photos(directorio.listFiles(IMAGE_FILTER), 1, 1, 1, tags);
             Set<String> photosIds = subir.Upload_photos(directorio.listFiles(Filter.IMAGE_FILTER), jComboBoxPrivacidad.getSelectedIndex(),
                                                         jComboBoxSeguridad.getSelectedIndex(), jComboBoxTContenido.getSelectedIndex(), tags);
-            Thread t = new Thread(new Runnable() {
-
-                @Override
-                public void run() {
+            
                     subir.ComprobarSubida(listadoArchivosListar);
-                }
-            });
-            t.start();                                                                                                       
+                                                                                                                   
                 
         } catch (FlickrException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
