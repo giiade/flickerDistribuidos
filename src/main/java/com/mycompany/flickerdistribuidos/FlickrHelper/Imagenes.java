@@ -183,7 +183,7 @@ public class Imagenes {
     }
     
     public void ComprobarSubida(JTextArea ta) {
-       
+            
                 RequestContext rContext = RequestContext.getRequestContext();
                 rContext.setAuth(autorizacionesFlickr.getAuth());
 
