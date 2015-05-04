@@ -150,9 +150,9 @@ public class GUI extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listadoArchivosListar = new javax.swing.JTextArea();
         labelTContenido = new javax.swing.JLabel();
-        jComboBoxTContenido = new javax.swing.JComboBox();
-        labelPrivacidad = new javax.swing.JLabel();
         jComboBoxPrivacidad = new javax.swing.JComboBox();
+        labelPrivacidad = new javax.swing.JLabel();
+        jComboBoxTContenido = new javax.swing.JComboBox();
         labelSeguridad = new javax.swing.JLabel();
         jComboBoxSeguridad = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
@@ -323,14 +323,19 @@ public class GUI extends javax.swing.JFrame {
 
         labelTContenido.setText("Tipo de contenido:");
 
-        jComboBoxTContenido.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Público", "Amigos", "Familia", "Familia y amigos", "Privado" }));
-
-        labelPrivacidad.setText("Privacidad:");
-
-        jComboBoxPrivacidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Foto", "Captura de pantalla", "Otro" }));
+        jComboBoxPrivacidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Público", "Amigos", "Familia", "Familia y amigos", "Privado" }));
         jComboBoxPrivacidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxPrivacidadActionPerformed(evt);
+            }
+        });
+
+        labelPrivacidad.setText("Privacidad:");
+
+        jComboBoxTContenido.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Foto", "Captura de pantalla", "Otro" }));
+        jComboBoxTContenido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxTContenidoActionPerformed(evt);
             }
         });
 
@@ -366,11 +371,11 @@ public class GUI extends javax.swing.JFrame {
                                 .addGap(20, 20, 20)
                                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelPrivacidad)
-                                    .addComponent(jComboBoxTContenido, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jComboBoxPrivacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(20, 20, 20)
                                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelTContenido)
-                                    .addComponent(jComboBoxPrivacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jComboBoxTContenido, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(20, 20, 20)
                                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelSeguridad)
@@ -385,7 +390,7 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBoxTContenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxPrivacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pantallaListarLayout.createSequentialGroup()
                         .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelPrivacidad)
@@ -393,7 +398,7 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(labelSeguridad))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBoxPrivacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxTContenido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxSeguridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -753,6 +758,7 @@ public class GUI extends javax.swing.JFrame {
         
         listadoArchivosListar.append(("\n" + "-------------------------------------------" 
                                       + "\n" + "Subiendo Archivos:\n"));
+                             
         
                        
         try {
@@ -950,6 +956,10 @@ public class GUI extends javax.swing.JFrame {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBoxTContenidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTContenidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxTContenidoActionPerformed
 
     private void jComboBoxPrivacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPrivacidadActionPerformed
         // TODO add your handling code here:
