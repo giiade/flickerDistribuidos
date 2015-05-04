@@ -17,7 +17,7 @@ public class Filter implements FilenameFilter {
 
   // array of supported extensions (use a List if you prefer)
     static final String[] EXTENSIONS = new String[]{
-        "gif", "png", "bmp", "jpeg", "jpg" // and other formats you need
+        "gif", "png", "bmp", "jpeg", "jpg", "wmv", "avi", "mp4", "3gp"  // and other formats you need
     };
     // filter to identify images based on their extensions
     public static final FilenameFilter IMAGE_FILTER = new FilenameFilter() {
@@ -37,8 +37,7 @@ public class Filter implements FilenameFilter {
     
   @Override
   public boolean accept (File dir, String name) {
-    return Pattern.matches(".*\\.(jpg|jpeg|gif|png|bmp)", name);
-    //  if only one extension to check :  "\\.jpg"
+    return Pattern.matches(".*\\.(jpg|jpeg|gif|png|bmp|wmv|avi|mp4|3gp)", name);
   }
   
   public static String [] filtroImagenes (File dir) {

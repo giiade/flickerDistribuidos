@@ -24,6 +24,7 @@ import com.urjc.java.pruautorizacionesflickr.AutorizacionesFlickr;
 import java.awt.TextArea;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.PrintStream;
 import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,6 +37,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -49,6 +51,8 @@ public class Imagenes {
     private boolean finish = false;
 
     ArrayList<String> ids = new ArrayList<>();
+
+    private int size = 0;
 
     public Imagenes(Flickr f) {
         flickr = f;
@@ -118,7 +122,7 @@ public class Imagenes {
 
         RequestContext rContext = RequestContext.getRequestContext();
         rContext.setAuth(autorizacionesFlickr.getAuth());
-
+        size = files.length;
         for (final File f : files) {
             System.out.println("image: " + f.getName());
             ArrayList<String> tag = SetTags(tags);
@@ -140,10 +144,12 @@ public class Imagenes {
     public int todosSubidos(List<Ticket> tickets) {
         int cont = 0;
         ids.clear();
-        for (Ticket t : tickets) {
-            if (t.hasCompleted()) {
-                cont += 1;
-                ids.add(t.getPhotoId());
+        if (tickets != null) {
+            for (Ticket t : tickets) {
+                if (t.hasCompleted()) {
+                    cont += 1;
+                    ids.add(t.getPhotoId());
+                }
             }
         }
         return cont;
@@ -181,37 +187,40 @@ public class Imagenes {
         t.start();
 
     }
-    
-    public void ComprobarSubida(TextArea ta) {
-       
-                RequestContext rContext = RequestContext.getRequestContext();
-                rContext.setAuth(autorizacionesFlickr.getAuth());
 
-                UploadInterface uploadInterface = flickr.getUploadInterface();
+    public void ComprobarSubida(JTextArea ta) {
 
-                try {
-                    List<Ticket> tickets = uploadInterface.checkTickets(photosIds);
-                    int completos = todosSubidos(tickets);
+        RequestContext rContext = RequestContext.getRequestContext();
+        rContext.setAuth(autorizacionesFlickr.getAuth());
 
-                    while (completos < tickets.size()) {
-                        System.out.println("Progreso: " + completos + " ficheros subidos, " + (tickets.size() - completos) + " pendientes.");
-                        ta.append("Progreso: " + completos + " ficheros subidos, " + (tickets.size() - completos) + " pendientes.\n");
-                        Thread.sleep(3000);
-                        completos = todosSubidos(uploadInterface.checkTickets(photosIds));
-                        System.out.println("Progreso: " + completos + " ficheros subidos, " + (tickets.size() - completos) + " pendientes.");
-                        ta.append("Progreso: " + completos + " ficheros subidos, " + (tickets.size() - completos) + " pendientes.\n");
-                        
-                    }
-                    finish = true;
+        UploadInterface uploadInterface = flickr.getUploadInterface();
+
+        try {
+            List<Ticket> tickets = uploadInterface.checkTickets(photosIds);
+            int completos = todosSubidos(tickets);
+
+            while (completos < size) {
+                        //System.out.println("Progreso: " + completos + " ficheros subidos, " + (tickets.size() - completos) + " pendientes.");
+                //ta.append("Progreso: " + completos + " ficheros subidos, " + (tickets.size() - completos) + " pendientes.\n");
+                Thread.sleep(3000);
+                completos = todosSubidos(uploadInterface.checkTickets(photosIds));
+                System.out.println("Progreso: " + completos + " ficheros subidos, " + (size - completos) + " pendientes.");
+                ta.append("Progreso: " + completos + " ficheros subidos, " + (size - completos) + " pendientes.\n");
+                ta.repaint();
+
+            }
+            finish = true;
+            System.out.println("Terminado");
+            ta.append("Terminado");
 
                     //Hacemos algo con las imagenes.
-                    //DEBUG
-                } catch (FlickrException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Imagenes.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            //DEBUG
+        } catch (FlickrException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Imagenes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void publicarAlbum(String titulo, String descripcion) throws FlickrException {
         PhotosetsInterface psInterface = flickr.getPhotosetsInterface();
@@ -247,11 +256,10 @@ public class Imagenes {
         Logger.getLogger(getClass().getName()).log(Level.INFO, "FOTOS AL GRUPO {0}", grupo.getName());
     }
 
-
-/**
- * @return the finish
- */
-public boolean isFinish() {
+    /**
+     * @return the finish
+     */
+    public boolean isFinish() {
         return finish;
     }
 
