@@ -328,12 +328,12 @@
                                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="labelPrivacidad" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jComboBoxTContenido" min="-2" pref="147" max="-2" attributes="0"/>
+                                          <Component id="jComboBoxPrivacidad" min="-2" pref="147" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="labelTContenido" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jComboBoxPrivacidad" min="-2" pref="147" max="-2" attributes="0"/>
+                                          <Component id="jComboBoxTContenido" min="-2" pref="147" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -356,7 +356,7 @@
                       <Component id="jScrollPane2" min="-2" pref="251" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jComboBoxTContenido" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxPrivacidad" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="labelPrivacidad" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -365,7 +365,7 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jComboBoxPrivacidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jComboBoxTContenido" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jComboBoxSeguridad" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -444,7 +444,7 @@
                 <Property name="text" type="java.lang.String" value="Tipo de contenido:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBoxTContenido">
+            <Component class="javax.swing.JComboBox" name="jComboBoxPrivacidad">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="5">
@@ -456,13 +456,16 @@
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxPrivacidadActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelPrivacidad">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Privacidad:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBoxPrivacidad">
+            <Component class="javax.swing.JComboBox" name="jComboBoxTContenido">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
@@ -473,7 +476,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxPrivacidadActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxTContenidoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelSeguridad">
