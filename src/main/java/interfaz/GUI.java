@@ -154,6 +154,7 @@ public class GUI extends javax.swing.JFrame {
         jComboBoxPrivacidad = new javax.swing.JComboBox();
         labelSeguridad = new javax.swing.JLabel();
         jComboBoxSeguridad = new javax.swing.JComboBox();
+        jLabel2 = new javax.swing.JLabel();
         capaspantallaSubir = new javax.swing.JLayeredPane();
         pantallaSubir = new javax.swing.JPanel();
         terminarSubir = new javax.swing.JButton();
@@ -189,7 +190,6 @@ public class GUI extends javax.swing.JFrame {
 
         capaspantallaInicio.setMaximumSize(new java.awt.Dimension(600, 600));
         capaspantallaInicio.setMinimumSize(new java.awt.Dimension(600, 600));
-        capaspantallaInicio.setPreferredSize(new java.awt.Dimension(600, 600));
 
         pantallaInicio.setMaximumSize(new java.awt.Dimension(600, 600));
         pantallaInicio.setPreferredSize(new java.awt.Dimension(600, 600));
@@ -238,7 +238,6 @@ public class GUI extends javax.swing.JFrame {
 
         capaspanelSelectorDirectorio.setMaximumSize(new java.awt.Dimension(600, 600));
         capaspanelSelectorDirectorio.setMinimumSize(new java.awt.Dimension(600, 600));
-        capaspanelSelectorDirectorio.setPreferredSize(new java.awt.Dimension(600, 600));
 
         panelSelectorDirectorio.setMaximumSize(new java.awt.Dimension(600, 600));
         panelSelectorDirectorio.setMinimumSize(new java.awt.Dimension(600, 600));
@@ -286,7 +285,6 @@ public class GUI extends javax.swing.JFrame {
 
         capaspantallaListar.setMaximumSize(new java.awt.Dimension(600, 589));
         capaspantallaListar.setMinimumSize(new java.awt.Dimension(600, 589));
-        capaspantallaListar.setPreferredSize(new java.awt.Dimension(600, 589));
 
         pantallaListar.setMaximumSize(new java.awt.Dimension(600, 589));
         pantallaListar.setMinimumSize(new java.awt.Dimension(600, 589));
@@ -339,6 +337,8 @@ public class GUI extends javax.swing.JFrame {
 
         jComboBoxSeguridad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seguro", "Moderado", "Restringido" }));
 
+        jLabel2.setText("Las etiquetas deben estar separadas por comas");
+
         javax.swing.GroupLayout pantallaListarLayout = new javax.swing.GroupLayout(pantallaListar);
         pantallaListar.setLayout(pantallaListarLayout);
         pantallaListarLayout.setHorizontalGroup(
@@ -355,7 +355,9 @@ public class GUI extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pantallaListarLayout.createSequentialGroup()
                                 .addComponent(labelEtiquetasListar, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cuadroTextoEtiquetasListar, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cuadroTextoEtiquetasListar, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(pantallaListarLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -373,7 +375,7 @@ public class GUI extends javax.swing.JFrame {
                                     .addComponent(labelSeguridad)
                                     .addComponent(jComboBoxSeguridad, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         pantallaListarLayout.setVerticalGroup(
             pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,7 +398,9 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cuadroTextoEtiquetasListar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelEtiquetasListar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pantallaListarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonListarSubirArchivos, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancelarListar))
@@ -420,7 +424,6 @@ public class GUI extends javax.swing.JFrame {
 
         capaspantallaSubir.setMaximumSize(new java.awt.Dimension(600, 600));
         capaspantallaSubir.setMinimumSize(new java.awt.Dimension(600, 600));
-        capaspantallaSubir.setPreferredSize(new java.awt.Dimension(600, 600));
 
         pantallaSubir.setMaximumSize(new java.awt.Dimension(600, 589));
         pantallaSubir.setMinimumSize(new java.awt.Dimension(600, 589));
@@ -511,7 +514,6 @@ public class GUI extends javax.swing.JFrame {
 
         capaspantallaAlbumGrupo.setMaximumSize(new java.awt.Dimension(600, 589));
         capaspantallaAlbumGrupo.setMinimumSize(new java.awt.Dimension(600, 589));
-        capaspantallaAlbumGrupo.setPreferredSize(new java.awt.Dimension(600, 589));
 
         pantallaAlbumGrupo.setMaximumSize(new java.awt.Dimension(600, 589));
         pantallaAlbumGrupo.setMinimumSize(new java.awt.Dimension(600, 589));
@@ -1004,6 +1006,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBoxSeguridad;
     private javax.swing.JComboBox jComboBoxTContenido;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
