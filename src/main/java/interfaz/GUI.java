@@ -953,6 +953,7 @@ public class GUI extends javax.swing.JFrame {
             subir.publicarEnGrupo(grupo);
             informacionLabel.setText("<html>Fotos añadidas al grupo con éxito.</html>");
         } catch (FlickrException ex) {
+            informacionLabel.setText("<html>Error al añadir las fotos al grupo seleccionado.</html>");
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
