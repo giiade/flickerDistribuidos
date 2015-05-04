@@ -703,7 +703,11 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="guardarAlbumGrupo" min="-2" pref="186" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="terminarAlbumGrupo" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                      <Component id="guardarAlbumGrupo" min="-2" pref="186" max="-2" attributes="0"/>
+                                  </Group>
                                   <Component id="panelAlbum" min="-2" max="-2" attributes="0"/>
                                   <Component id="panelGrupos" alignment="1" max="-2" attributes="0"/>
                               </Group>
@@ -723,7 +727,10 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="informacionLabel" pref="42" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="guardarAlbumGrupo" min="-2" pref="28" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="guardarAlbumGrupo" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                          <Component id="terminarAlbumGrupo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -867,7 +874,7 @@
                               <Component id="labelGrupo" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLabel1" pref="217" max="32767" attributes="0"/>
+                          <Component id="labelInfoGrupos" pref="217" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -884,7 +891,7 @@
                           </Group>
                           <EmptySpace pref="23" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="labelInfoGrupos" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -912,7 +919,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel1">
+                <Component class="javax.swing.JLabel" name="labelInfoGrupos">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;Si quiere que se incluya en alg&#xfa;n grupo, seleccione un grupo y pulse A&#xf1;adir a Grupo.&lt;/html&gt;"/>
                   </Properties>
@@ -920,6 +927,14 @@
               </SubComponents>
             </Container>
             <Component class="javax.swing.JLabel" name="informacionLabel">
+            </Component>
+            <Component class="javax.swing.JButton" name="terminarAlbumGrupo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Terminar"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="terminarAlbumGrupoActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
