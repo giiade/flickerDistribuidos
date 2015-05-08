@@ -19,7 +19,6 @@ import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import com.flickr4java.flickr.prefs.PrefsInterface;
 import com.flickr4java.flickr.uploader.UploadMetaData;
 import com.flickr4java.flickr.uploader.Uploader;
-import com.mycompany.flickerdistribuidos.Main;
 import com.urjc.java.pruautorizacionesflickr.AutorizacionesFlickr;
 import java.awt.TextArea;
 import java.io.File;
@@ -58,6 +57,13 @@ public class Imagenes {
         flickr = f;
     }
 
+    /** 
+     * Nos permite elegir el tipo de contenido
+     * 0: Fotos; 1: Capturas de pantalla; 2: Otros
+     * @param p Entero entre 0 y 2
+     * @return String para hacer la peticion a la API
+     * @throws FlickrException 
+     */
     public String setContentType(int p) throws FlickrException {
         switch (p) {
             case 0:
@@ -72,6 +78,11 @@ public class Imagenes {
         }
     }
 
+    /** 
+     * Nos permite elegir la privacidad de las fotos
+     * @param p 0: Public; 1: Amigos; 2: Familia; 3: Amigos y Familia; 4: Privado
+     * @param m metadatos que se subiran
+     */
     public void setPrivacy(int p, UploadMetaData m) {
         switch (p) {
             case 0:
@@ -101,7 +112,12 @@ public class Imagenes {
                 m.setPublicFlag(true);
         }
     }
-
+    /**
+     * Elegir el nivel de seguridad de las fotos
+     * @param p 0: Seguro; 1: Moderado; 2: Restringido;
+     * @return String para la peticion
+     * @throws FlickrException 
+     */
     public String setSafetyLevel(int p) throws FlickrException {
         switch (p) {
             case 0:
@@ -128,7 +144,7 @@ public class Imagenes {
         return resultado;
     }
 
-    //TODO: CLASE PARA LAS FOTOS para poder separlo en file y metadata y meter asi titulos a cada imagen.
+    //Metodo que subirá todas las fotos y nos actualizada el array de PhotosID para poder hacer un seguimiento de las fotos subidas.
     public Set<String> Upload_photos(File[] files, int privacidad, int safety, int content, String tags) throws FlickrException {
 
         RequestContext rContext = RequestContext.getRequestContext();
@@ -152,6 +168,7 @@ public class Imagenes {
         return photosIds;
     }
 
+    //Comprobacion interna para saber si están todos subidos, tambien obtenemos el ID real de las fotos, que se usará para agregar a los albunes
     public int todosSubidos(List<Ticket> tickets) {
         int cont = 0;
         ids.clear();
@@ -166,39 +183,8 @@ public class Imagenes {
         return cont;
     }
 
-    public void ComprobarSubida() {
-        Thread t = new Thread() {
-            public void run() {
-                RequestContext rContext = RequestContext.getRequestContext();
-                rContext.setAuth(autorizacionesFlickr.getAuth());
-
-                UploadInterface uploadInterface = flickr.getUploadInterface();
-
-                try {
-                    List<Ticket> tickets = uploadInterface.checkTickets(photosIds);
-                    int completos = todosSubidos(tickets);
-
-                    while (completos < tickets.size()) {
-                        System.out.println("Progreso: " + completos + "ficheros subidos, " + (tickets.size() - completos) + "pendientes.");
-                        sleep(3000);
-                        completos = todosSubidos(uploadInterface.checkTickets(photosIds));
-                        System.out.println("Progreso: " + completos + "ficheros subidos, " + (tickets.size() - completos) + "pendientes.");
-                    }
-                    finish = true;
-
-                    //Hacemos algo con las imagenes.
-                    //DEBUG
-                } catch (FlickrException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Imagenes.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        };
-        t.start();
-
-    }
-
+    //Este metodo es el que imprime cada 3 segundos por pantalla el progreso de las fotos. Hay que tener en cuenta que no es asincrono, aunque 
+    //podría ser asincrono tal y como de la manera que esta programado. Es funcional asincronamente por consola.
     public void ComprobarSubida(JTextArea ta) {
 
         RequestContext rContext = RequestContext.getRequestContext();
@@ -211,8 +197,6 @@ public class Imagenes {
             int completos = todosSubidos(tickets);
 
             while (completos < size) {
-                        //System.out.println("Progreso: " + completos + " ficheros subidos, " + (tickets.size() - completos) + " pendientes.");
-                //ta.append("Progreso: " + completos + " ficheros subidos, " + (tickets.size() - completos) + " pendientes.\n");
                 Thread.sleep(3000);
                 completos = todosSubidos(uploadInterface.checkTickets(photosIds));
                 System.out.println("Progreso: " + completos + " ficheros subidos, " + (size - completos) + " pendientes.");
@@ -227,12 +211,13 @@ public class Imagenes {
                     //Hacemos algo con las imagenes.
             //DEBUG
         } catch (FlickrException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {
             Logger.getLogger(Imagenes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    //Metodo usado para publicar las fotos a un album.
     public void publicarAlbum(String titulo, String descripcion) throws FlickrException {
         PhotosetsInterface psInterface = flickr.getPhotosetsInterface();
         PhotosInterface p = flickr.getPhotosInterface();
@@ -245,6 +230,7 @@ public class Imagenes {
         System.out.println("Album Creado");
     }
 
+    //Metodo usado para obtener un listado de grupos al que pertenece el usuario
     public ArrayList<Group> getGrupos() throws FlickrException {
         PoolsInterface pools = flickr.getPoolsInterface();
         ArrayList<Group> grupos = new ArrayList<>();
@@ -256,6 +242,7 @@ public class Imagenes {
         return grupos;
     }
 
+    //Metodo para publicar en el grupo elegido
     public void publicarEnGrupo(Group grupo) throws FlickrException {
         PhotosInterface p = flickr.getPhotosInterface();
         PoolsInterface pools = flickr.getPoolsInterface();

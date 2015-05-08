@@ -30,7 +30,6 @@ import com.flickr4java.flickr.prefs.PrefsInterface;
 import com.flickr4java.flickr.uploader.UploadMetaData;
 import com.flickr4java.flickr.uploader.Uploader;
 import com.mycompany.flickerdistribuidos.FlickrHelper.Imagenes;
-import com.mycompany.flickerdistribuidos.Main;
 import com.urjc.java.pruautorizacionesflickr.AutorizacionesFlickr;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -783,7 +782,7 @@ public class GUI extends javax.swing.JFrame {
                                                                                                                    
                 
         } catch (FlickrException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getName()).log(Level.SEVERE, null, ex);
         }
         
         botonListarSubirArchivos.setEnabled(true);
